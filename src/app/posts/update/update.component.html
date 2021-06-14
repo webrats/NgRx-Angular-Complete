@@ -1,0 +1,19 @@
+<h3>Update Post</h3>
+
+<hr>
+
+<form [formGroup] ="updateForm" (ngSubmit) ="updatePost()">
+    <div class="form-group my-3 ">
+        <label >Title</label>
+    <input type="text" class="form-control" formControlName="title" required placeholder="Title">
+    </div>
+    <div class="col my-3 text-left">
+        <label >Description</label>
+    <textarea class="form-control" formControlName="desc" placeholder="Description"></textarea>
+    <div style="color :red">{{description()}}</div>
+    </div>
+
+    <div class="col my-3 text-left">
+       <button type="submit" [disabled]="updateForm.invalid" class="btn btn-primary">update</button>
+    </div>
+</form>

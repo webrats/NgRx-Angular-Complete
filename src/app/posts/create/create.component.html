@@ -1,0 +1,20 @@
+<h3>Write Post</h3>
+
+<hr>
+
+<form [formGroup] ="postForm" (ngSubmit) ="addPost()">
+    <div class="form-group my-3 ">
+        <label >Title</label>
+    <input type="text" class="form-control" formControlName="title" required placeholder="Title">
+    <div id="emailHelp" *ngIf="postForm.get('title').touched && postForm.get('title').hasError('required')" style="color:red">Email is required</div>
+    </div>
+    <div class="col my-3 text-left">
+        <label >Description</label>
+    <textarea class="form-control" formControlName="desc" placeholder="Description"></textarea>
+    <div style="color :red">{{description()}}</div>
+    </div>
+
+    <div class="col my-3 text-left">
+       <button type="submit" [disabled]="postForm.invalid" class="btn btn-primary">Submit</button>
+    </div>
+</form>
