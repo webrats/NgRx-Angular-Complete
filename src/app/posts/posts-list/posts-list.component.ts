@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { AppState } from 'src/app/app.state';
+import { Observable, Subscription } from 'rxjs';
+import { AppState } from 'src/app/store/app.state';
+import { setErrorMessage, setLoaderStatus } from 'src/app/store/shared/shared.actions';
 import { Post } from '../model/post';
-import { delete_post_action } from '../state/posts.actions';
+import { delete_post_action, load_posts_start_action } from '../state/posts.actions';
 import { getPosts } from '../state/posts.selectors';
 
 @Component({
@@ -11,13 +12,31 @@ import { getPosts } from '../state/posts.selectors';
   templateUrl: './posts-list.component.html',
   styleUrls: ['./posts-list.component.scss']
 })
-export class PostsListComponent implements OnInit {
+export class PostsListComponent implements OnInit ,OnDestroy {
 
-  posts :Observable<Post[]>
+
+  posts :Post[] ;
+  OnDestroyUnsubscribe :Subscription ;
   constructor(private store : Store<AppState>) { }
+ 
+  ngOnDestroy(): void {
+    // Unsubscribeing to the subscription 
+    this.OnDestroyUnsubscribe.unsubscribe();
+  }
 
   ngOnInit(): void {
-    this.posts  = this.store.select(getPosts) ;
+    // getting the data using selector . it return an observable 
+    // subscribe to that observable and getting the data
+    this.OnDestroyUnsubscribe =this.store.select(getPosts).subscribe(data =>{
+      this.posts =data 
+   })
+
+   if(!this.posts){
+    this.store.dispatch(setLoaderStatus({status:true}))
+    this.store.dispatch(load_posts_start_action())
+    this.store.dispatch(setLoaderStatus({status:false}))
+   }
+    
   }
 
   deletePost(id: Number){

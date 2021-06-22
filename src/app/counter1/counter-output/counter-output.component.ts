@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { CounterState } from '../state/counter.state';
 import {getCounter} from "../state/counter.selectors";
-import { AppState } from 'src/app/app.state';
+import { AppState } from 'src/app/store/app.state';
 @Component({
   selector: 'app-counter-output',
   templateUrl: './counter-output.component.html',

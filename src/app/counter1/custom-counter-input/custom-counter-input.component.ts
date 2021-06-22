@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { addCustomValue, changeDesc, increment } from '../state/counter.actions';
-import { CounterState } from '../state/counter.state';
 import {getDesc} from "../state/counter.selectors";
-import { AppState } from 'src/app/app.state';
+import { AppState } from 'src/app/store/app.state';
 @Component({
   selector: 'app-custom-counter-input',
   templateUrl: './custom-counter-input.component.html',

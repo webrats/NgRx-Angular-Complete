@@ -1,5 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/app.state';
+import { User } from 'src/app/posts/model/User';
+import { loginStart } from '../state/auth.actions';
+import {  setErrorMessage, setLoaderStatus } from 'src/app/store/shared/shared.actions';
+
+
+
+
+
+
 
 @Component({
   selector: 'app-login',
@@ -7,10 +18,11 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
+  
   loginForm :FormGroup ;
+ 
 
-  constructor() { }
+  constructor(private store :Store<AppState>) { }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -20,7 +32,20 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin(){
-    console.log(this.loginForm.value)
+    this.store.dispatch(setErrorMessage({message:""}))
+    const user :User  = {
+      username : this.loginForm.value.userid,
+      password : this.loginForm.value.password
+    } 
+   const  email  = this.loginForm.value.userid
+     const  password = this.loginForm.value.password
+     //Loader state set 
+     this.store.dispatch(setLoaderStatus({status:true}))
+     //login
+    this.store.dispatch(loginStart({email, password})) 
+   
+  
+ 
       }
 
   userNameField(){
@@ -35,7 +60,6 @@ export class LoginComponent implements OnInit {
     }
   }
   passwordField(){
-
     const pass = this.loginForm.get("password")
     if(pass.touched && pass.invalid){
       if(pass.errors.required){
@@ -48,4 +72,7 @@ export class LoginComponent implements OnInit {
 
   }
 
+  
+
+  
 }

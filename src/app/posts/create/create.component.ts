@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/app.state';
+import { AppState } from 'src/app/store/app.state';
 import { Post } from '../model/post';
 import {  add_post_action } from '../state/posts.actions';
 
@@ -26,9 +26,10 @@ export class CreateComponent implements OnInit {
   addPost(){
     const post :Post ={
       title : this.postForm.value.title,
-      desc :this.postForm.value.desc
+      description :this.postForm.value.desc
     };
-    this.store.dispatch(add_post_action({Post :post}) ) ;
+  
+    this.store.dispatch(add_post_action({post}) ) ;
 
     
   }

@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import { AppState } from 'src/app/app.state';
+import { AppState } from 'src/app/store/app.state';
 import { Post } from '../model/post';
 import { update_post_action } from '../state/posts.actions';
 import { getPostById } from '../state/posts.selectors';
@@ -37,7 +37,7 @@ export class UpdateComponent implements OnInit ,OnDestroy {
           this.updateForm = new FormGroup({ 
             id: new FormControl(this.post.id) , 
             title:new FormControl(this.post.title,[Validators.required]),
-            desc :new FormControl(this.post.desc,[Validators.required])
+            desc :new FormControl(this.post.description,[Validators.required])
           })
         
     })
@@ -56,9 +56,9 @@ export class UpdateComponent implements OnInit ,OnDestroy {
     const post :Post = {
       id :this.updateForm.value.id,
       title : this.updateForm.value.title,
-      desc :this.updateForm.value.desc 
+      description :this.updateForm.value.desc 
     }
-    this.store.dispatch(update_post_action({Post:post}))
+    this.store.dispatch(update_post_action({post}))
     
     this.updateForm = new FormGroup({ 
       id: new FormControl(null) , 

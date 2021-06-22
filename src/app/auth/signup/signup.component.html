@@ -1,1 +1,42 @@
-<p>signup works!</p>
+<div class="row">
+  <div class="col-md-3"></div>
+  <div class="col-md-6">
+    <h4>SignUp</h4>
+    <hr />
+    <form [formGroup]="signupForm" (ngSubmit)="onSignup()">
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" class="form-control" formControlName="email" />
+        <div style="color: red">{{ userNameField() }}</div>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input
+          type="password"
+          class="form-control"
+          formControlName="password"
+        />
+        <div style="color: red">{{ passwordField() }}</div>
+      </div>
+      <div class="form-group">
+        <label>Re-Enter Password</label>
+        <input
+          type="password"
+          class="form-control"
+          formControlName="repassword"
+        />
+        <div style="color: red">{{ repasswordField() }}</div>
+      </div>
+
+      <div class="form-group my-1">
+        <button
+          type="submit"
+          [disabled]="signupForm.invalid"
+          class="btn btn-primary"
+        >
+          SignUp
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
